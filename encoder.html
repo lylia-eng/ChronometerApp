@@ -14,8 +14,8 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  background-image: url('https://previews.123rf.com/images/dr911/dr9111509/dr911150900009/45074075-creative-blue-gears-background-.jpg');
-  backdrop-filter: blur(2px);
+  background-image: url('https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&w=1000&q=80');
+  /* backdrop-filter: blur(1px); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -24,11 +24,12 @@ body {
 /* Header/logo Title */
 .header {
   padding: 20px 10px 20px 10px;
-  margin: 10px 3px 10px 3px;
+  margin: 10px 20px 10px 20px;
   text-align: center;
-  background:rgb(118, 219, 245, 0.6);
-  color: white;
-
+  /* background:rgba(66, 125, 139, 0.7); */
+  background: rgba(255, 255, 255, 0.3);
+  color: black;
+  /* text-shadow: 2px 2px 2px gray; */
   font-weight: bold;
   font-weight: 500;
   letter-spacing: 1px;
@@ -42,6 +43,8 @@ body {
 .stack {
   display: flex;
   flex-direction: row;
+  margin-left: 20px;
+  margin-right: 20px
 }
 
 .card {
@@ -50,8 +53,8 @@ body {
   width: 40%;
   margin: 3px;
   margin-top: 5px;
-  letter-spacing: .5px;
-  background-color: white;
+  /* letter-spacing: .5px; */
+  background: rgba(255, 255, 255, 0.5);
   /* border-radius: 10px; */
 }
 
@@ -74,10 +77,7 @@ body {
 
 .footer {
   margin-top: 3px;
-  margin-left: 3px;
-  width: 275px;
-  color: white;
-  background:rgb(118, 219, 245, 0.6);
+  margin-left: 6px;
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
