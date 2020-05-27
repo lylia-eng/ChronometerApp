@@ -1,0 +1,243 @@
+<html lang="en">
+<head>
+<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta http-equiv="refresh" content="5" > -->
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Style the body */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Header/logo Title */
+.header {
+  padding: 80px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+}
+
+/* Increase the font size of the heading */
+.header h1 {
+  font-size: 40px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+
+.winner {
+  background-color: aquamarine;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.footer {
+  margin-top: 3px;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .row {   
+    flex-direction: column;
+  }
+}
+
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+  .navbar a {
+    float: none;
+    width: 100%;
+  }
+}
+</style>
+</head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+     <script type="text/javascript" language="javascript">
+
+    const weatherAPIkey = '5a70e8ca8717ce8cf66c7ee0288f6cfa';
+    const sheetAPIkey = 'AIzaSyCUBQJZknQA0OFjp-Aj2NCEAB8FZnYaj3M';
+    const sheetId = '1F2q1uA-_N2mmf696VhHk11r0oElrOgM8EMpRY7gIb8s';
+    const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/sheet1?key=${sheetAPIkey}`
+
+    const googleScriptURL = 'https://script.google.com/macros/s/AKfycbz7UvO5EgULaPYM9pEVV6W81VuZ4ZJGvUlpaGCReH9kTE4u2AeX/exec?callback=?';
+    
+    let count = 0;
+
+    let state = { 1 : {}, 2: {}, 3: {}, 4:{}, 5:{}, 6:{}}; // independent of # groups
+    let groupScores = [
+        {group : 1, groupScore : 0},
+        {group : 2, groupScore : 0},
+        {group : 3, groupScore : 0},
+        {group : 4, groupScore : 0},
+        {group : 5, groupScore : 0},
+        {group : 6, groupScore : 0}
+    ]; // index is group #
+    let ranking = [];
+
+    const sheetHeaders = ["Timestamp", "Name", "Group #", "Pulse length", "Avg Pulse length", "P", "Score"]; // don't change this order
+    const emptyStudentRow = [0,0,0,0,0,0,0];
+    
+    async function mount(num) {
+        getMyAPI();
+        let counter = document.getElementById("count")
+        let int = self.setInterval(function () {
+            newcount = count + 1;
+            counter.innerHTML = counter.innerHTML.replace(count, newcount);
+            count = newcount;
+            getMyAPI()
+        }, 500);
+    }
+
+    async function getMyAPI() {
+        // row is array of arrays of last row from each sheet (group)
+        $.getJSON(googleScriptURL, function(row) {
+            // for each group
+            for (i = 0; i < row.length; i++) {
+                let groupNum = row[i][2];
+                let studentName = row[i][1];
+                let studentScore = row[i][row.length-1];
+
+                state = {
+                    ...state,
+                    [groupNum] : {
+                        ...state[groupNum],
+                        [studentName] : row[i],
+                    }
+                }
+                // cannot calculate group scores here by adding to group score bc would be double/x counting
+            } 
+        })
+
+        // iterate thru state to sum score after getting new rows
+        for (let [group, studentList] of Object.entries(state)) {
+            let groupScore = 0; // wipe previous, now getting all updated scores from state
+            for (let [student, data] of Object.entries(studentList)) {
+                groupScore += data[data.length - 1];
+            }
+            groupScores[parseInt(group)-1] = {group : parseInt(group), groupScore : groupScore};
+        }
+
+        groupScores.sort(function (a, b) {
+            return b.groupScore - a.groupScore;
+        });
+        console.log("state", state);
+        console.log("groupScores", groupScores);
+        document.getElementById("score1_group").innerHTML = "Group #" + groupScores[0].group;
+        document.getElementById("score1").innerHTML = "Group Score: " + groupScores[0].groupScore.toFixed(3);
+        
+        document.getElementById("score2_group").innerHTML = "Group #" + groupScores[1].group;
+        document.getElementById("score2").innerHTML = "Group Score: " + groupScores[1].groupScore.toFixed(3);
+        
+        document.getElementById("score3_group").innerHTML = "Group #" + groupScores[2].group;
+        document.getElementById("score3").innerHTML = "Group Score: " + groupScores[2].groupScore.toFixed(3);
+        
+        document.getElementById("score4_group").innerHTML = "Group #" + groupScores[3].group;
+        document.getElementById("score4").innerHTML = "Group Score: " + groupScores[3].groupScore.toFixed(3);
+        
+        document.getElementById("score5_group").innerHTML = "Group #" + groupScores[4].group;
+        document.getElementById("score5").innerHTML = "Group Score: " + groupScores[4].groupScore.toFixed(3);
+        
+        document.getElementById("score6_group").innerHTML = "Group #" + groupScores[5].group;
+        document.getElementById("score6").innerHTML = "Group Score: " + groupScores[5].groupScore.toFixed(3);
+    }
+
+  </script>
+
+<body onload="mount(123)">
+
+<div class="header">
+  <h1>Chronometer Competition Ranking: Live Scores</h1>
+  <p id="count">API calls: 0</p>
+  <p>DO NOT REFRESH OR LEAVE THIS PAGE WHILE TESTING IN PROCESS bc it wipes your local state memory and ranking will be inaccurate. will fix</p>
+</div>
+
+<div class="stack">
+
+    <div class="card">
+      <div class="winner">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+      <div class="container">
+        <h4><b>Winning Clock</b></h4>
+        <h5 id="score1_group"></h5> 
+        <p id="score1"></p> 
+      </div>
+      </div>
+    </div>
+  
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        <div class="container">
+            <h4><b>#2 Clock</b></h4>
+            <h5 id="score2_group"></h5> 
+            <p id="score2"></p> 
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        <div class="container">
+            <h4><b>#3 Clock</b></h4>
+            <h5 id="score3_group"></h5> 
+            <p id="score3"></p> 
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        <div class="container">
+            <h4><b>#4 Clock</b></h4>
+            <h5 id="score4_group"></h5> 
+            <p id="score4"></p> 
+        </div>
+    </div>
+    
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        <div class="container">
+            <h4><b>#5 Clock</b></h4>
+            <h5 id="score5_group"></h5> 
+            <p id="score5"></p> 
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        <div class="container">
+            <h4><b>#6 Clock</b></h4>
+            <h5 id="score6_group"></h5> 
+            <p id="score6"></p> 
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <a href="https://github.com/slbian?tab=repositories">check out the struggle on github</a>
+</div>
+
+</body>
+</html>
