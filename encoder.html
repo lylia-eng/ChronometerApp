@@ -14,14 +14,24 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+  background-image: url('https://previews.123rf.com/images/dr911/dr9111509/dr911150900009/45074075-creative-blue-gears-background-.jpg');
+  backdrop-filter: blur(2px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Header/logo Title */
 .header {
-  padding: 80px;
+  padding: 20px 10px 20px 10px;
+  margin: 10px 3px 10px 3px;
   text-align: center;
-  background: #1abc9c;
+  background:rgb(118, 219, 245, 0.6);
   color: white;
+
+  font-weight: bold;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 /* Increase the font size of the heading */
@@ -35,13 +45,23 @@ body {
 }
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
   transition: 0.3s;
   width: 40%;
+  margin: 3px;
+  margin-top: 5px;
+  letter-spacing: .5px;
+  background-color: white;
+  /* border-radius: 10px; */
+}
+
+.clock-img {
+  /* border-radius: 10px 10px 0px 0px; */
 }
 
 .winner {
-  background-color: aquamarine;
+  background-color: #76dbf5;
+  height: 100%;
 }
 
 .card:hover {
@@ -54,6 +74,10 @@ body {
 
 .footer {
   margin-top: 3px;
+  margin-left: 3px;
+  width: 275px;
+  color: white;
+  background:rgb(118, 219, 245, 0.6);
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
@@ -110,7 +134,7 @@ body {
             counter.innerHTML = counter.innerHTML.replace(count, newcount);
             count = newcount;
             getMyAPI()
-        }, 500);
+        }, 3000);
     }
 
     async function getMyAPI() {
@@ -165,7 +189,7 @@ body {
         document.getElementById("score6_group").innerHTML = "Group #" + groupScores[5].group;
         document.getElementById("score6").innerHTML = "Group Score: " + groupScores[5].groupScore.toFixed(3);
     }
-
+// <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
   </script>
 
 <body onload="mount(123)">
@@ -180,9 +204,9 @@ body {
 
     <div class="card">
       <div class="winner">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+      
       <div class="container">
-        <h4><b>Winning Clock</b></h4>
+        <h4><b>#1 Clock</b></h4>
         <h5 id="score1_group"></h5> 
         <p id="score1"></p> 
       </div>
@@ -190,7 +214,7 @@ body {
     </div>
   
     <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        
         <div class="container">
             <h4><b>#2 Clock</b></h4>
             <h5 id="score2_group"></h5> 
@@ -199,7 +223,7 @@ body {
     </div>
 
     <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        
         <div class="container">
             <h4><b>#3 Clock</b></h4>
             <h5 id="score3_group"></h5> 
@@ -208,7 +232,7 @@ body {
     </div>
 
     <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        
         <div class="container">
             <h4><b>#4 Clock</b></h4>
             <h5 id="score4_group"></h5> 
@@ -217,7 +241,7 @@ body {
     </div>
     
     <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        
         <div class="container">
             <h4><b>#5 Clock</b></h4>
             <h5 id="score5_group"></h5> 
@@ -226,7 +250,7 @@ body {
     </div>
 
     <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+        
         <div class="container">
             <h4><b>#6 Clock</b></h4>
             <h5 id="score6_group"></h5> 
