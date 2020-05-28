@@ -1,20 +1,19 @@
 <html lang="en">
 <head>
-<title>Page Title</title>
+<title>Chronometer Competition Ranking</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <meta http-equiv="refresh" content="5" > -->
 
 <style>
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
 /* Style the body */
 body {
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-  background-image: url('https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&w=1000&q=80');
+  background-color: #2C3531;
+  background-image: url('https://www.vippng.com/png/full/361-3612977_website-background-png-tech-background-image-for-website.png');
   /* backdrop-filter: blur(1px); */
   background-position: center;
   background-repeat: no-repeat;
@@ -24,11 +23,10 @@ body {
 /* Header/logo Title */
 .header {
   padding: 20px 10px 20px 10px;
-  margin: 10px 20px 10px 20px;
+  margin: 20px 20px 10px 20px;
   text-align: center;
-  /* background:rgba(66, 125, 139, 0.7); */
-  background: rgba(255, 255, 255, 0.3);
-  color: black;
+  /* background: rgb(17, 100, 102, 0.5); */
+  color: white;
   /* text-shadow: 2px 2px 2px gray; */
   font-weight: bold;
   font-weight: 500;
@@ -37,7 +35,8 @@ body {
 
 /* Increase the font size of the heading */
 .header h1 {
-  font-size: 40px;
+  font-size: 45px;
+  color: #D9b08c
 }
 
 .stack {
@@ -47,37 +46,70 @@ body {
   margin-right: 20px
 }
 
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
-  transition: 0.3s;
+.container {
+  display: flex;
+  flex-direction: column;
   width: 40%;
-  margin: 3px;
-  margin-top: 5px;
-  /* letter-spacing: .5px; */
-  background: rgba(255, 255, 255, 0.5);
-  /* border-radius: 10px; */
+  text-align: center;
 }
 
-.clock-img {
-  /* border-radius: 10px 10px 0px 0px; */
+.rank {
+  letter-spacing: 1px;
+  font-size: large;
+  color: white;
+}
+
+.card {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.5);
+  transition: 0.3s;
+  margin: 6px;
+  color: white;
+  background: rgb(17, 100, 102, 0.5);
+  border-radius: 8px;
+}
+
+.cardHeader {
+  background-color: rgb(217, 176, 140, .9);
+  border-radius: 8px 8px 0px 0px;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: large;
+}
+
+.cardHeaderText {
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  color: black;
+}
+
+.cardBody {
+ padding: 10px;
+ text-align: center;
+}
+
+.cardBody h5{
+ padding-top: 10px;
+ margin: 0;
+ font-size: medium;
 }
 
 .winner {
-  background-color: #76dbf5;
-  height: 100%;
+  background-color: rgb(17, 100, 102, 0.9);
+  border-radius: 8px;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-  padding: 2px 16px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
 }
 
 .footer {
-  margin-top: 3px;
-  margin-left: 6px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.a {
+  color: white;
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
@@ -101,7 +133,7 @@ body {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     
-     <script type="text/javascript" language="javascript">
+    <script type="text/javascript" language="javascript">
 
     const weatherAPIkey = '5a70e8ca8717ce8cf66c7ee0288f6cfa';
     const sheetAPIkey = 'AIzaSyCUBQJZknQA0OFjp-Aj2NCEAB8FZnYaj3M';
@@ -171,23 +203,23 @@ body {
         });
         console.log("state", state);
         console.log("groupScores", groupScores);
-        document.getElementById("score1_group").innerHTML = "Group #" + groupScores[0].group;
-        document.getElementById("score1").innerHTML = "Group Score: " + groupScores[0].groupScore.toFixed(3);
+        document.getElementById("score1_group").innerHTML = "Group " + groupScores[0].group;
+        document.getElementById("score1").innerHTML = groupScores[0].groupScore.toFixed(3);
         
-        document.getElementById("score2_group").innerHTML = "Group #" + groupScores[1].group;
-        document.getElementById("score2").innerHTML = "Group Score: " + groupScores[1].groupScore.toFixed(3);
+        document.getElementById("score2_group").innerHTML = "Group " + groupScores[1].group;
+        document.getElementById("score2").innerHTML = groupScores[1].groupScore.toFixed(3);
         
-        document.getElementById("score3_group").innerHTML = "Group #" + groupScores[2].group;
-        document.getElementById("score3").innerHTML = "Group Score: " + groupScores[2].groupScore.toFixed(3);
+        document.getElementById("score3_group").innerHTML = "Group " + groupScores[2].group;
+        document.getElementById("score3").innerHTML = groupScores[2].groupScore.toFixed(3);
         
-        document.getElementById("score4_group").innerHTML = "Group #" + groupScores[3].group;
-        document.getElementById("score4").innerHTML = "Group Score: " + groupScores[3].groupScore.toFixed(3);
+        document.getElementById("score4_group").innerHTML = "Group " + groupScores[3].group;
+        document.getElementById("score4").innerHTML = groupScores[3].groupScore.toFixed(3);
         
-        document.getElementById("score5_group").innerHTML = "Group #" + groupScores[4].group;
-        document.getElementById("score5").innerHTML = "Group Score: " + groupScores[4].groupScore.toFixed(3);
+        document.getElementById("score5_group").innerHTML = "Group " + groupScores[4].group;
+        document.getElementById("score5").innerHTML = groupScores[4].groupScore.toFixed(3);
         
-        document.getElementById("score6_group").innerHTML = "Group #" + groupScores[5].group;
-        document.getElementById("score6").innerHTML = "Group Score: " + groupScores[5].groupScore.toFixed(3);
+        document.getElementById("score6_group").innerHTML = "Group " + groupScores[5].group;
+        document.getElementById("score6").innerHTML = groupScores[5].groupScore.toFixed(3);
     }
 // <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
   </script>
@@ -201,66 +233,106 @@ body {
 </div>
 
 <div class="stack">
-
+  <div class="container">
+    <div class="rank">#1</div>
     <div class="card">
       <div class="winner">
       
-      <div class="container">
-        <h4><b>#1 Clock</b></h4>
-        <h5 id="score1_group"></h5> 
-        <p id="score1"></p> 
-      </div>
+        <div class="cardHeader">
+          <div class="cardHeaderText" id="score1_group"></div>
+        </div>
+
+        <div class="cardBody">
+          <h5> Group Score: </h5> 
+          <p id="score1"></p> 
+        </div>
+
       </div>
     </div>
+  </div>
   
+  <div class="container">
+    <div class="rank">#2</div>
     <div class="card">
-        
-        <div class="container">
-            <h4><b>#2 Clock</b></h4>
-            <h5 id="score2_group"></h5> 
-            <p id="score2"></p> 
+      
+        <div class="cardHeader">
+          <div class="cardHeaderText" id="score2_group"></div>
         </div>
-    </div>
 
-    <div class="card">
-        
-        <div class="container">
-            <h4><b>#3 Clock</b></h4>
-            <h5 id="score3_group"></h5> 
-            <p id="score3"></p> 
+        <div class="cardBody">
+          <h5> Group Score: </h5> 
+          <p id="score2"></p> 
         </div>
-    </div>
 
-    <div class="card">
-        
-        <div class="container">
-            <h4><b>#4 Clock</b></h4>
-            <h5 id="score4_group"></h5> 
-            <p id="score4"></p> 
-        </div>
     </div>
-    
+  </div>
+  
+  <div class="container">
+    <div class="rank">#3</div>
     <div class="card">
-        
-        <div class="container">
-            <h4><b>#5 Clock</b></h4>
-            <h5 id="score5_group"></h5> 
-            <p id="score5"></p> 
+      
+        <div class="cardHeader">
+          <div class="cardHeaderText" id="score3_group"></div>
         </div>
-    </div>
 
-    <div class="card">
-        
-        <div class="container">
-            <h4><b>#6 Clock</b></h4>
-            <h5 id="score6_group"></h5> 
-            <p id="score6"></p> 
+        <div class="cardBody">
+          <h5> Group Score: </h5> 
+          <p id="score3"></p> 
         </div>
+
     </div>
+  </div>
+  
+  <div class="container">
+    <div class="rank">#4</div>
+    <div class="card">
+      
+        <div class="cardHeader">
+          <div class="cardHeaderText" id="score4_group"></div>
+        </div>
+
+        <div class="cardBody">
+          <h5> Group Score: </h5> 
+          <p id="score4"></p> 
+        </div>
+
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="rank">#5</div>
+    <div class="card">
+      
+        <div class="cardHeader">
+          <div class="cardHeaderText" id="score5_group"></div>
+        </div>
+
+        <div class="cardBody">
+          <h5> Group Score: </h5> 
+          <p id="score5"></p> 
+        </div>
+
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="rank">#6</div>
+    <div class="card">
+      
+        <div class="cardHeader">
+          <div class="cardHeaderText" id="score6_group"></div>
+        </div>
+
+        <div class="cardBody">
+          <h5> Group Score: </h5> 
+          <p id="score6"></p> 
+        </div>
+
+    </div>
+  </div>
 </div>
-
 <div class="footer">
-    <a href="https://github.com/slbian?tab=repositories">check out the struggle on github</a>
+    <a href="https://github.com/slbian?tab=repositories" style="color:white">check out the struggle on github</a>
 </div>
 
 </body>
