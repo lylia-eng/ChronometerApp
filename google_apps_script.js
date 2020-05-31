@@ -21,16 +21,40 @@ function doGet(e) {
      .openById(spreadsheetId)
      .getSheetByName('Group6');
      
-    // getSheetValues(startRow, startColumn, numRows, numColumns)
-     var results_group1 = group1.getSheetValues(group1.getLastRow(), 1, 1, 7).reduce(function(a, b){return a.concat(b);});
-     var results_group2 = group2.getSheetValues(group2.getLastRow(), 1, 1, 7).reduce(function(a, b){return a.concat(b);});
-     var results_group3 = group3.getSheetValues(group3.getLastRow(), 1, 1, 7).reduce(function(a, b){return a.concat(b);});
-     var results_group4 = group1.getSheetValues(group4.getLastRow(), 1, 1, 7).reduce(function(a, b){return a.concat(b);});
-     var results_group5 = group2.getSheetValues(group5.getLastRow(), 1, 1, 7).reduce(function(a, b){return a.concat(b);});
-     var results_group6 = group3.getSheetValues(group6.getLastRow(), 1, 1, 7).reduce(function(a, b){return a.concat(b);});
-     Logger.log(results_group4);
-     Logger.log(results_group5);
-     Logger.log(results_group6);
+    // getSheetValues(startRow, startColumn, numRows, numColumns) -- startRow = group3.getLastRow()
+     // .reduce(function(a, b){return a.concat(b);})
+     var results_group1 = [[]];
+     var results_group2 = [[]];
+     var results_group3 = [[]];
+     var results_group4 = [[]];
+     var results_group5 = [[]];
+     var results_group6 = [[]];
+
+     if (group1.getLastRow() > 1) {
+        results_group1 = group1.getSheetValues(2, 1, group1.getLastRow() - 1, 9);
+     }
+     if (group2.getLastRow() > 1) {
+        results_group2 = group2.getSheetValues(2, 1, group2.getLastRow() - 1, 9);
+     }
+     if (group3.getLastRow() > 1) {
+        results_group3 = group3.getSheetValues(2, 1, group3.getLastRow() - 1, 9);
+     }
+     if (group4.getLastRow() > 1) {
+        results_group4 = group4.getSheetValues(2, 1, group4.getLastRow() - 1, 9);
+     }
+     if (group5.getLastRow() > 1) {
+        results_group5 = group5.getSheetValues(2, 1, group5.getLastRow() - 1, 9);
+     }
+     if (group6.getLastRow() > 1) {
+        results_group6 = group6.getSheetValues(2, 1, group6.getLastRow() - 1, 9);
+     }
+     
+    //  Logger.log(results_group1);
+    //  Logger.log(results_group2);
+    //  Logger.log(results_group3);
+    //  Logger.log(results_group4);
+    //  Logger.log(results_group5);
+    //  Logger.log(results_group6);
      
      var results = [];
      results.push(results_group1);

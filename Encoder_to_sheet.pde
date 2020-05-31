@@ -109,7 +109,8 @@ void submit_form(String values)
   //System.out.println("Seventh token is:" + vals[6] + "\n");
   
   String url_start = "https://docs.google.com/forms/d/e/1FAIpQLSfRGrEMlZrtUuvqUzjzTsSFR7BfIlB1N03iTI_er0qUnTwFNw/formResponse?usp=pp_url";
-// https://docs.google.com/forms/d/e/1FAIpQLSfRGrEMlZrtUuvqUzjzTsSFR7BfIlB1N03iTI_er0qUnTwFNw/viewform?usp=pp_url&entry.1876202486=1&entry.870043936=2  String entry_0 = "&entry.1876202486=";
+// https://docs.google.com/forms/d/e/1FAIpQLSfRGrEMlZrtUuvqUzjzTsSFR7BfIlB1N03iTI_er0qUnTwFNw/viewform?usp=pp_url&entry.1876202486=1&entry.870043936=2
+  String entry_0 = "&entry.1876202486=";
   String entry_1 = "&entry.870043936=";
   String entry_2 = "&entry.760049515=";
   String entry_3 = "&entry.864227038=";

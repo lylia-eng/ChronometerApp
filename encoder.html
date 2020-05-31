@@ -155,7 +155,7 @@ body {
     ]; // index is group #
     let ranking = [];
 
-    const sheetHeaders = ["Timestamp", "Name", "Group #", "Pulse length", "Avg Pulse length", "P", "Score"]; // don't change this order
+    const sheetHeaders = ["Timestamp", "Name", "Student #", "Group #", "Pulses", "Pulse length", "Avg Pulse length", "P", "Score"]; // don't change this order
     const emptyStudentRow = [0,0,0,0,0,0,0];
     
     async function mount(num) {
@@ -169,22 +169,26 @@ body {
         }, 3000);
     }
 
+    // data format is [group][student][column]
     async function getMyAPI() {
-        // row is array of arrays of last row from each sheet (group)
-        $.getJSON(googleScriptURL, function(row) {
-            // for each group
-            for (i = 0; i < row.length; i++) {
-                let groupNum = row[i][2];
-                let studentName = row[i][1];
-                let studentScore = row[i][row.length-1];
+        $.getJSON(googleScriptURL, function(data) {
+            for (i = 0; i < data.length; i++) {
+                let group = data[i]
+                // for each student
+                for (j = 0; j < group.length; j++){
+                  let student = group[j];
+                  let groupNum = student[3];
+                  let studentName = student[1];
+                  let studentScore = student[student.length-1];
 
-                state = {
-                    ...state,
-                    [groupNum] : {
-                        ...state[groupNum],
-                        [studentName] : row[i],
-                    }
+                  state = {
+                      ...state,
+                      [groupNum] : {
+                          ...state[groupNum],
+                          [studentName] : student,
+                      }
                 }
+              }
                 // cannot calculate group scores here by adding to group score bc would be double/x counting
             } 
         })
@@ -203,6 +207,7 @@ body {
         });
         console.log("state", state);
         console.log("groupScores", groupScores);
+
         document.getElementById("score1_group").innerHTML = "Group " + groupScores[0].group;
         document.getElementById("score1").innerHTML = groupScores[0].groupScore.toFixed(3);
         
