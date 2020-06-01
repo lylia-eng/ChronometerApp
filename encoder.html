@@ -63,14 +63,14 @@ body {
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.5);
   transition: 0.3s;
   margin: 6px;
-  color: white;
-  background: rgb(17, 100, 102, 0.5);
-  border-radius: 8px;
+  color: black;
+  background: #d1e8e2;
+  border-radius: 6px;
 }
 
 .cardHeader {
   background-color: rgb(217, 176, 140, .9);
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 6px 6px 0px 0px;
   text-align: center;
   letter-spacing: 1px;
   font-size: large;
@@ -94,9 +94,14 @@ body {
  font-size: medium;
 }
 
+.cardFooter {
+  color: white;
+  background: rgb(17, 100, 102);
+}
+
 .winner {
   background-color: rgb(17, 100, 102, 0.9);
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .card:hover {
@@ -128,108 +133,155 @@ body {
 }
 </style>
 </head>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    
-    <script type="text/javascript" language="javascript">
 
-    const weatherAPIkey = '5a70e8ca8717ce8cf66c7ee0288f6cfa';
-    const sheetAPIkey = 'AIzaSyCUBQJZknQA0OFjp-Aj2NCEAB8FZnYaj3M';
-    const sheetId = '1F2q1uA-_N2mmf696VhHk11r0oElrOgM8EMpRY7gIb8s';
-    const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/sheet1?key=${sheetAPIkey}`
+<script type="text/javascript" language="javascript">
 
-    const googleScriptURL = 'https://script.google.com/macros/s/AKfycbz7UvO5EgULaPYM9pEVV6W81VuZ4ZJGvUlpaGCReH9kTE4u2AeX/exec?callback=?';
-    
-    let count = 0;
+const weatherAPIkey = '5a70e8ca8717ce8cf66c7ee0288f6cfa';
+const sheetAPIkey = 'AIzaSyCUBQJZknQA0OFjp-Aj2NCEAB8FZnYaj3M';
+const sheetId = '1F2q1uA-_N2mmf696VhHk11r0oElrOgM8EMpRY7gIb8s';
+const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/sheet1?key=${sheetAPIkey}`
 
-    let state = { 1 : {}, 2: {}, 3: {}, 4:{}, 5:{}, 6:{}}; // independent of # groups
-    let groupScores = [
-        {group : 1, groupScore : 0},
-        {group : 2, groupScore : 0},
-        {group : 3, groupScore : 0},
-        {group : 4, groupScore : 0},
-        {group : 5, groupScore : 0},
-        {group : 6, groupScore : 0}
-    ]; // index is group #
-    let ranking = [];
+const googleScriptURL = 'https://script.google.com/macros/s/AKfycbz7UvO5EgULaPYM9pEVV6W81VuZ4ZJGvUlpaGCReH9kTE4u2AeX/exec?callback=?';
 
-    const sheetHeaders = ["Timestamp", "Name", "Student #", "Group #", "Pulses", "Pulse length", "Avg Pulse length", "P", "Score"]; // don't change this order
-    const emptyStudentRow = [0,0,0,0,0,0,0];
-    
-    async function mount(num) {
-        getMyAPI();
-        let counter = document.getElementById("count")
-        let int = self.setInterval(function () {
-            newcount = count + 1;
-            counter.innerHTML = counter.innerHTML.replace(count, newcount);
-            count = newcount;
-            getMyAPI()
-        }, 3000);
-    }
+let count = 0;
 
-    // data format is [group][student][column]
-    async function getMyAPI() {
-        $.getJSON(googleScriptURL, function(data) {
-            for (i = 0; i < data.length; i++) {
-                let group = data[i]
-                // for each student
-                for (j = 0; j < group.length; j++){
-                  let student = group[j];
-                  let groupNum = student[3];
-                  let studentName = student[1];
-                  let studentScore = student[student.length-1];
+let state = { 1 : {}, 2: {}, 3: {}, 4:{}, 5:{}, 6:{}}; // independent of # groups
+let groupScores = [
+{group : 1, groupScore : 0},
+{group : 2, groupScore : 0},
+{group : 3, groupScore : 0},
+{group : 4, groupScore : 0},
+{group : 5, groupScore : 0},
+{group : 6, groupScore : 0}
+]; // index is group #
+let ranking = [];
 
-                  state = {
-                      ...state,
-                      [groupNum] : {
-                          ...state[groupNum],
-                          [studentName] : student,
-                      }
-                }
+const sheetHeaders = ["Timestamp", "Name", "Student #", "Group #", "Pulses", "Pulse length", "Avg Pulse length", "P", "Score"]; // don't change this order
+const emptyStudentRow = [0,0,0,0,0,0,0];
+
+async function mount(num) {
+  await getMyAPI();
+  let counter = document.getElementById("count")
+  let int = self.setInterval(async function () {
+    newcount = count + 1;
+    counter.innerHTML = counter.innerHTML.replace(count, newcount);
+    count = newcount;
+    await getMyAPI();
+}, 3000);
+}
+
+// data format is [group][student][column]
+async function getMyAPI() {
+  await $.getJSON(googleScriptURL, function(data) {
+    console.log(data);
+    for (i = 0; i < data.length; i++) {
+        let group = data[i]
+        // for each student
+        for (j = 0; j < group.length; j++){
+          let student = group[j];
+          let groupNum = student[3];
+          let studentName = student[1];
+          let studentScore = student[student.length-1];
+
+          state = {
+              ...state,
+              [groupNum] : {
+                  ...state[groupNum],
+                  [studentName] : student,
               }
-                // cannot calculate group scores here by adding to group score bc would be double/x counting
-            } 
-        })
-
-        // iterate thru state to sum score after getting new rows
-        for (let [group, studentList] of Object.entries(state)) {
-            let groupScore = 0; // wipe previous, now getting all updated scores from state
-            for (let [student, data] of Object.entries(studentList)) {
-                groupScore += data[data.length - 1];
-            }
-            groupScores[parseInt(group)-1] = {group : parseInt(group), groupScore : groupScore};
+          }
         }
+        // cannot calculate group scores here by adding to group score bc would be double/x counting
+      } 
+})
 
-        groupScores.sort(function (a, b) {
-            return b.groupScore - a.groupScore;
-        });
-        console.log("state", state);
-        console.log("groupScores", groupScores);
+// iterate thru state to sum score after getting new rows
+for (let [group, studentList] of Object.entries(state)) {
+    let groupScore = 0; // wipe previous, now getting all updated scores from state
+    
+    if ( group !== 'undefined') {
+      let students = {};
 
-        document.getElementById("score1_group").innerHTML = "Group " + groupScores[0].group;
-        document.getElementById("score1").innerHTML = groupScores[0].groupScore.toFixed(3);
-        
-        document.getElementById("score2_group").innerHTML = "Group " + groupScores[1].group;
-        document.getElementById("score2").innerHTML = groupScores[1].groupScore.toFixed(3);
-        
-        document.getElementById("score3_group").innerHTML = "Group " + groupScores[2].group;
-        document.getElementById("score3").innerHTML = groupScores[2].groupScore.toFixed(3);
-        
-        document.getElementById("score4_group").innerHTML = "Group " + groupScores[3].group;
-        document.getElementById("score4").innerHTML = groupScores[3].groupScore.toFixed(3);
-        
-        document.getElementById("score5_group").innerHTML = "Group " + groupScores[4].group;
-        document.getElementById("score5").innerHTML = groupScores[4].groupScore.toFixed(3);
-        
-        document.getElementById("score6_group").innerHTML = "Group " + groupScores[5].group;
-        document.getElementById("score6").innerHTML = groupScores[5].groupScore.toFixed(3);
+      for (let [student, data] of Object.entries(studentList)) {
+        groupScore += data[data.length - 1];
+
+        students = {
+          ...students,
+          [student] : data[data.length - 1]
+        }
+      }
+      groupScores[parseInt(group)-1] = {group : parseInt(group), groupScore : groupScore, students};
     }
-// <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
-  </script>
+    else {
+      // console.log("group " + group + " undefined")
+    }
+}
 
-<body onload="mount(123)">
+groupScores.sort(function (a, b) {
+    return b.groupScore - a.groupScore;
+});
+
+console.log("state", state);
+console.log("group scores: ", groupScores)
+
+// group_X = the #X group
+// score_X = score of #X group
+// student_X_1 = score of student 1 in #X group
+// name_X_1 = name of student 1 in #X group
+
+for (i = 0; i < groupScores.length; i++) {
+  let groupInfo = groupScores[i];
+
+  let num = i + 1;
+  let groupNumString = 'group_' + num;
+  let groupScoreString = 'score_' + num;
+  let studentScoreString = 'student_' + num + "_0";
+  let studentNameString = 'name_' + num + "_0"
+
+  let s = 0;
+  console.log("group student", groupInfo.students)
+  for (let [studentName, studentScore] of Object.entries(groupInfo.students)) {
+    s += 1;
+    studentScoreString = studentScoreString.slice(0, -1) + s.toString();
+    studentNameString = studentNameString.slice(0, -1) + s.toString();
+    console.log("studentscorestring", studentScoreString)
+    console.log("studentNameString", studentNameString)
+    // console.log("score of student " + s + ": " + data[data.length - 1]);
+    document.getElementById(studentNameString).innerHTML = studentName;
+    document.getElementById(studentScoreString).innerHTML = studentScore;
+  }
+  document.getElementById(groupNumString).innerHTML = groupInfo.group;
+  document.getElementById(groupScoreString).innerHTML = groupInfo.groupScore;
+
+} 
+
+
+// document.getElementById("score1_group").innerHTML = "Group " + groupScores[0].group;
+// document.getElementById("score1").innerHTML = groupScores[0].groupScore.toFixed(2);
+
+// document.getElementById("score2_group").innerHTML = "Group " + groupScores[1].group;
+// document.getElementById("score2").innerHTML = groupScores[1].groupScore.toFixed(2);
+
+// document.getElementById("score3_group").innerHTML = "Group " + groupScores[2].group;
+// document.getElementById("score3").innerHTML = groupScores[2].groupScore.toFixed(2);
+
+// document.getElementById("score4_group").innerHTML = "Group " + groupScores[3].group;
+// document.getElementById("score4").innerHTML = groupScores[3].groupScore.toFixed(2);
+
+// document.getElementById("score5_group").innerHTML = "Group " + groupScores[4].group;
+// document.getElementById("score5").innerHTML = groupScores[4].groupScore.toFixed(2);
+
+// document.getElementById("score6_group").innerHTML = "Group " + groupScores[5].group;
+// document.getElementById("score6").innerHTML = groupScores[5].groupScore.toFixed(2);
+}
+// <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
+</script>
+
+<body onload="mount(123); getMyAPI()">
 
 <div class="header">
   <h1>Chronometer Competition Ranking: Live Scores</h1>
@@ -240,19 +292,31 @@ body {
 <div class="stack">
   <div class="container">
     <div class="rank">#1</div>
-    <div class="card">
-      <div class="winner">
-      
+    <div class="card">     
+
         <div class="cardHeader">
-          <div class="cardHeaderText" id="score1_group"></div>
+          <div class="cardHeaderText" id="group_1"></div>
         </div>
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score1"></p> 
+          <p id="score_1"></p> 
+        </div>
+        
+        <div class="cardFooter">
+          <h5> Individual Scores: </h5> 
+          <p id="name_1_1"></p>
+          <p id="student_1_1"></p> 
+          <p id="name_1_2"></p>
+          <p id="student_1_2"></p> 
+          <p id="name_1_3"></p>
+          <p id="student_1_3"></p> 
+          <p id="name_1_4"></p>
+          <p id="student_1_4"></p> 
+          <p id="name_1_5"></p>
+          <p id="student_1_5"></p> 
         </div>
 
-      </div>
     </div>
   </div>
   
@@ -261,12 +325,26 @@ body {
     <div class="card">
       
         <div class="cardHeader">
-          <div class="cardHeaderText" id="score2_group"></div>
+          <div class="cardHeaderText" id="group_2"></div>
         </div>
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score2"></p> 
+          <p id="score_2"></p> 
+        </div>
+        
+        <div class="cardFooter">
+          <h5> Individual Scores: </h5> 
+          <p id="name_2_1"></p>
+          <p id="student_2_1"></p> 
+          <p id="name_2_2"></p>
+          <p id="student_2_2"></p> 
+          <p id="name_2_3"></p>
+          <p id="student_2_3"></p> 
+          <p id="name_2_4"></p>
+          <p id="student_2_4"></p> 
+          <p id="name_2_5"></p>
+          <p id="student_2_5"></p> 
         </div>
 
     </div>
@@ -277,12 +355,26 @@ body {
     <div class="card">
       
         <div class="cardHeader">
-          <div class="cardHeaderText" id="score3_group"></div>
+          <div class="cardHeaderText" id="group_3"></div>
         </div>
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score3"></p> 
+          <p id="score_3"></p> 
+        </div>
+
+        <div class="cardFooter">
+          <h5> Individual Scores: </h5> 
+          <p id="name_3_1"></p>
+          <p id="student_3_1"></p> 
+          <p id="name_3_2"></p>
+          <p id="student_3_2"></p> 
+          <p id="name_3_3"></p>
+          <p id="student_3_3"></p> 
+          <p id="name_3_4"></p>
+          <p id="student_3_4"></p> 
+          <p id="name_3_5"></p>
+          <p id="student_3_5"></p> 
         </div>
 
     </div>
@@ -293,12 +385,26 @@ body {
     <div class="card">
       
         <div class="cardHeader">
-          <div class="cardHeaderText" id="score4_group"></div>
+          <div class="cardHeaderText" id="group_4"></div>
         </div>
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score4"></p> 
+          <p id="score_4"></p> 
+        </div>
+
+        <div class="cardFooter">
+          <h5> Individual Scores: </h5> 
+          <p id="name_4_1"></p>
+          <p id="student_4_1"></p> 
+          <p id="name_4_2"></p>
+          <p id="student_4_2"></p> 
+          <p id="name_4_3"></p>
+          <p id="student_4_3"></p> 
+          <p id="name_4_4"></p>
+          <p id="student_4_4"></p> 
+          <p id="name_4_5"></p>
+          <p id="student_4_5"></p> 
         </div>
 
     </div>
@@ -309,12 +415,26 @@ body {
     <div class="card">
       
         <div class="cardHeader">
-          <div class="cardHeaderText" id="score5_group"></div>
+          <div class="cardHeaderText" id="group_5"></div>
         </div>
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score5"></p> 
+          <p id="score_5"></p> 
+        </div>
+
+        <div class="cardFooter">
+          <h5> Individual Scores: </h5> 
+          <p id="name_5_1"></p>
+          <p id="student_5_1"></p> 
+          <p id="name_5_2"></p>
+          <p id="student_5_2"></p> 
+          <p id="name_5_3"></p>
+          <p id="student_5_3"></p> 
+          <p id="name_5_4"></p>
+          <p id="student_5_4"></p> 
+          <p id="name_5_5"></p>
+          <p id="student_5_5"></p> 
         </div>
 
     </div>
@@ -325,12 +445,26 @@ body {
     <div class="card">
       
         <div class="cardHeader">
-          <div class="cardHeaderText" id="score6_group"></div>
+          <div class="cardHeaderText" id="group_6"></div>
         </div>
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score6"></p> 
+          <p id="score_6"></p> 
+        </div>
+
+        <div class="cardFooter">
+          <h5> Individual Scores: </h5> 
+          <p id="name_6_1"></p>
+          <p id="student_6_1"></p> 
+          <p id="name_6_2"></p>
+          <p id="student_6_2"></p> 
+          <p id="name_6_3"></p>
+          <p id="student_6_3"></p> 
+          <p id="name_6_4"></p>
+          <p id="student_6_4"></p> 
+          <p id="name_6_5"></p>
+          <p id="student_6_5"></p> 
         </div>
 
     </div>
