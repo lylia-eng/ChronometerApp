@@ -4,22 +4,22 @@ function doGet(e) {
      
      var group1 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group1');
+     .getSheetByName('Group1_latest');
      var group2 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group2');
+     .getSheetByName('Group2_latest');
      var group3 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group3');
+     .getSheetByName('Group3_latest');
      var group4 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group4');
+     .getSheetByName('Group4_latest');
      var group5 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group5');
+     .getSheetByName('Group5_latest');
      var group6 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group6');
+     .getSheetByName('Group6_latest');
      
     // getSheetValues(startRow, startColumn, numRows, numColumns) -- startRow = group3.getLastRow()
      // .reduce(function(a, b){return a.concat(b);})

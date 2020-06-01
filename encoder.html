@@ -99,6 +99,12 @@ body {
   background: rgb(17, 100, 102);
 }
 
+.cardFooter h5{
+ padding-top: 10px;
+ margin: 0;
+ font-size: medium;
+}
+
 .winner {
   background-color: rgb(17, 100, 102, 0.9);
   border-radius: 6px;
@@ -167,36 +173,43 @@ async function mount(num) {
   await getMyAPI();
   let counter = document.getElementById("count")
   let int = self.setInterval(async function () {
+    try {
     newcount = count + 1;
     counter.innerHTML = counter.innerHTML.replace(count, newcount);
     count = newcount;
     await getMyAPI();
+    } catch(e) {
+      console.log(e);
+    }
 }, 3000);
 }
 
 // data format is [group][student][column]
 async function getMyAPI() {
   await $.getJSON(googleScriptURL, function(data) {
-    console.log(data);
-    for (i = 0; i < data.length; i++) {
-        let group = data[i]
-        // for each student
-        for (j = 0; j < group.length; j++){
-          let student = group[j];
-          let groupNum = student[3];
-          let studentName = student[1];
-          let studentScore = student[student.length-1];
+    try {
+      for (i = 0; i < data.length; i++) {
+          let group = data[i]
+          // for each student
+          for (j = 0; j < group.length; j++){
+            let student = group[j];
+            let groupNum = student[3];
+            let studentName = student[1];
+            let studentScore = student[student.length-1];
 
-          state = {
-              ...state,
-              [groupNum] : {
-                  ...state[groupNum],
-                  [studentName] : student,
-              }
+            state = {
+                ...state,
+                [groupNum] : {
+                    ...state[groupNum],
+                    [studentName] : student,
+                }
+            }
           }
-        }
-        // cannot calculate group scores here by adding to group score bc would be double/x counting
-      } 
+          // cannot calculate group scores here by adding to group score bc would be double/x counting
+        } 
+    } catch(e){
+      console.log(e);
+    }
 })
 
 // iterate thru state to sum score after getting new rows
@@ -243,42 +256,26 @@ for (i = 0; i < groupScores.length; i++) {
   let studentNameString = 'name_' + num + "_0"
 
   let s = 0;
-  console.log("group student", groupInfo.students)
+  // console.log("group student", groupInfo.students)
   for (let [studentName, studentScore] of Object.entries(groupInfo.students)) {
     s += 1;
     studentScoreString = studentScoreString.slice(0, -1) + s.toString();
     studentNameString = studentNameString.slice(0, -1) + s.toString();
-    console.log("studentscorestring", studentScoreString)
-    console.log("studentNameString", studentNameString)
+    // console.log("studentscorestring", studentScoreString)
+    // console.log("studentNameString", studentNameString)
     // console.log("score of student " + s + ": " + data[data.length - 1]);
-    document.getElementById(studentNameString).innerHTML = studentName;
-    document.getElementById(studentScoreString).innerHTML = studentScore;
+    document.getElementById(studentNameString).innerHTML = studentName + ":";
+    document.getElementById(studentScoreString).innerHTML = studentScore.toFixed(2);
   }
   document.getElementById(groupNumString).innerHTML = groupInfo.group;
-  document.getElementById(groupScoreString).innerHTML = groupInfo.groupScore;
+  document.getElementById(groupScoreString).innerHTML = groupInfo.groupScore.toFixed(2);
 
 } 
 
-
-// document.getElementById("score1_group").innerHTML = "Group " + groupScores[0].group;
-// document.getElementById("score1").innerHTML = groupScores[0].groupScore.toFixed(2);
-
-// document.getElementById("score2_group").innerHTML = "Group " + groupScores[1].group;
-// document.getElementById("score2").innerHTML = groupScores[1].groupScore.toFixed(2);
-
-// document.getElementById("score3_group").innerHTML = "Group " + groupScores[2].group;
-// document.getElementById("score3").innerHTML = groupScores[2].groupScore.toFixed(2);
-
-// document.getElementById("score4_group").innerHTML = "Group " + groupScores[3].group;
-// document.getElementById("score4").innerHTML = groupScores[3].groupScore.toFixed(2);
-
-// document.getElementById("score5_group").innerHTML = "Group " + groupScores[4].group;
-// document.getElementById("score5").innerHTML = groupScores[4].groupScore.toFixed(2);
-
-// document.getElementById("score6_group").innerHTML = "Group " + groupScores[5].group;
-// document.getElementById("score6").innerHTML = groupScores[5].groupScore.toFixed(2);
+// Google sheet queries
+// =array_Constrain(sort(sortn(sort(ArrayFormula({'Form Responses 3'!A2:I,if(len(A2:A),row(A2:A),"")}),8,false),9^9,2,3,false),8,TRUE),counta(A2:A),9)
+// =query('Form Responses 3'!L:T,"select L, M, N, O, P, Q, R, S, T where O = 1")
 }
-// <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Marine-Chronometer.A.Lange%26Soehne.1948.jpg" alt="Avatar" style="width:100%">
 </script>
 
 <body onload="mount(123); getMyAPI()">
@@ -286,7 +283,6 @@ for (i = 0; i < groupScores.length; i++) {
 <div class="header">
   <h1>Chronometer Competition Ranking: Live Scores</h1>
   <p id="count">API calls: 0</p>
-  <p>DO NOT REFRESH OR LEAVE THIS PAGE WHILE TESTING IN PROCESS bc it wipes your local state memory and ranking will be inaccurate. will fix</p>
 </div>
 
 <div class="stack">
