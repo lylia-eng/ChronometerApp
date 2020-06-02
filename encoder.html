@@ -69,7 +69,7 @@ body {
 }
 
 .cardHeader {
-  background-color: rgb(217, 176, 140, .9);
+  background-color: rgb(217, 176, 140);
   border-radius: 6px 6px 0px 0px;
   text-align: center;
   letter-spacing: 1px;
@@ -79,22 +79,28 @@ body {
 .cardHeaderText {
   text-align: center;
   font-weight: bold;
-  padding: 20px;
+  padding: 15px 5px 15px 5px;
   color: black;
 }
 
 .cardBody {
  padding: 10px;
  text-align: center;
+ background: rgb(17, 100, 102);
+ color: white;
+ border-radius: 0px 0px 6px 6px;
+ letter-spacing: 1px;
 }
 
 .cardBody h5{
  padding-top: 10px;
+ letter-spacing: 0px;
  margin: 0;
  font-size: medium;
+ color:  rgb(255, 205, 162);
 }
 
-.cardFooter {
+/* .cardFooter {
   color: white;
   background: rgb(17, 100, 102);
 }
@@ -103,12 +109,7 @@ body {
  padding-top: 10px;
  margin: 0;
  font-size: medium;
-}
-
-.winner {
-  background-color: rgb(17, 100, 102, 0.9);
-  border-radius: 6px;
-}
+} */
 
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
@@ -267,7 +268,7 @@ for (i = 0; i < groupScores.length; i++) {
     document.getElementById(studentNameString).innerHTML = studentName + ":";
     document.getElementById(studentScoreString).innerHTML = studentScore.toFixed(2);
   }
-  document.getElementById(groupNumString).innerHTML = groupInfo.group;
+  document.getElementById(groupNumString).innerHTML = "Group " + groupInfo.group;
   document.getElementById(groupScoreString).innerHTML = groupInfo.groupScore.toFixed(2);
 
 } 
@@ -296,20 +297,18 @@ for (i = 0; i < groupScores.length; i++) {
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score_1"></p> 
-        </div>
+          <b><p id="score_1"></p></b> 
         
-        <div class="cardFooter">
           <h5> Individual Scores: </h5> 
-          <p id="name_1_1"></p>
+          <u><p id="name_1_1"></p></u>
           <p id="student_1_1"></p> 
-          <p id="name_1_2"></p>
+          <u><p id="name_1_2"></p></u>
           <p id="student_1_2"></p> 
-          <p id="name_1_3"></p>
+          <u><p id="name_1_3"></p></u>
           <p id="student_1_3"></p> 
-          <p id="name_1_4"></p>
+          <u><p id="name_1_4"></p></u>
           <p id="student_1_4"></p> 
-          <p id="name_1_5"></p>
+          <u><p id="name_1_5"></p></u>
           <p id="student_1_5"></p> 
         </div>
 
@@ -326,20 +325,18 @@ for (i = 0; i < groupScores.length; i++) {
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score_2"></p> 
-        </div>
+          <b><p id="score_2"></p></b> 
         
-        <div class="cardFooter">
           <h5> Individual Scores: </h5> 
-          <p id="name_2_1"></p>
+          <u><p id="name_2_1"></p></u>
           <p id="student_2_1"></p> 
-          <p id="name_2_2"></p>
+          <u><p id="name_2_2"></p></u>
           <p id="student_2_2"></p> 
-          <p id="name_2_3"></p>
+          <u><p id="name_2_3"></p></u>
           <p id="student_2_3"></p> 
-          <p id="name_2_4"></p>
+          <u><p id="name_2_4"></p></u>
           <p id="student_2_4"></p> 
-          <p id="name_2_5"></p>
+          <u><p id="name_2_5"></p></u>
           <p id="student_2_5"></p> 
         </div>
 
@@ -356,20 +353,18 @@ for (i = 0; i < groupScores.length; i++) {
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score_3"></p> 
-        </div>
-
-        <div class="cardFooter">
+          <b><p id="score_3"></p></b> 
+        
           <h5> Individual Scores: </h5> 
-          <p id="name_3_1"></p>
+          <u><p id="name_3_1"></p></u>
           <p id="student_3_1"></p> 
-          <p id="name_3_2"></p>
+          <u><p id="name_3_2"></p></u>
           <p id="student_3_2"></p> 
-          <p id="name_3_3"></p>
+          <u><p id="name_3_3"></p></u>
           <p id="student_3_3"></p> 
-          <p id="name_3_4"></p>
+          <u><p id="name_3_4"></p></u>
           <p id="student_3_4"></p> 
-          <p id="name_3_5"></p>
+          <u><p id="name_3_5"></p></u>
           <p id="student_3_5"></p> 
         </div>
 
@@ -386,20 +381,18 @@ for (i = 0; i < groupScores.length; i++) {
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score_4"></p> 
-        </div>
-
-        <div class="cardFooter">
+          <b><p id="score_4"></p></b> 
+        
           <h5> Individual Scores: </h5> 
-          <p id="name_4_1"></p>
+          <u><p id="name_4_1"></p></u>
           <p id="student_4_1"></p> 
-          <p id="name_4_2"></p>
+          <u><p id="name_4_2"></p></u>
           <p id="student_4_2"></p> 
-          <p id="name_4_3"></p>
+          <u><p id="name_4_3"></p></u>
           <p id="student_4_3"></p> 
-          <p id="name_4_4"></p>
+          <u><p id="name_4_4"></p></u>
           <p id="student_4_4"></p> 
-          <p id="name_4_5"></p>
+          <u><p id="name_4_5"></p></u>
           <p id="student_4_5"></p> 
         </div>
 
@@ -416,20 +409,18 @@ for (i = 0; i < groupScores.length; i++) {
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score_5"></p> 
-        </div>
-
-        <div class="cardFooter">
+          <b><p id="score_5"></p></b> 
+        
           <h5> Individual Scores: </h5> 
-          <p id="name_5_1"></p>
+          <u><p id="name_5_1"></p></u>
           <p id="student_5_1"></p> 
-          <p id="name_5_2"></p>
+          <u><p id="name_5_2"></p></u>
           <p id="student_5_2"></p> 
-          <p id="name_5_3"></p>
+          <u><p id="name_5_3"></p></u>
           <p id="student_5_3"></p> 
-          <p id="name_5_4"></p>
+          <u><p id="name_5_4"></p></u>
           <p id="student_5_4"></p> 
-          <p id="name_5_5"></p>
+          <u><p id="name_5_5"></p></u>
           <p id="student_5_5"></p> 
         </div>
 
@@ -446,20 +437,18 @@ for (i = 0; i < groupScores.length; i++) {
 
         <div class="cardBody">
           <h5> Group Score: </h5> 
-          <p id="score_6"></p> 
-        </div>
-
-        <div class="cardFooter">
+          <b><p id="score_6"></p></b> 
+        
           <h5> Individual Scores: </h5> 
-          <p id="name_6_1"></p>
+          <u><p id="name_6_1"></p></u>
           <p id="student_6_1"></p> 
-          <p id="name_6_2"></p>
+          <u><p id="name_6_2"></p></u>
           <p id="student_6_2"></p> 
-          <p id="name_6_3"></p>
+          <u><p id="name_6_3"></p></u>
           <p id="student_6_3"></p> 
-          <p id="name_6_4"></p>
+          <u><p id="name_6_4"></p></u>
           <p id="student_6_4"></p> 
-          <p id="name_6_5"></p>
+          <u><p id="name_6_5"></p></u>
           <p id="student_6_5"></p> 
         </div>
 
