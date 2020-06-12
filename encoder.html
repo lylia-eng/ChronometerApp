@@ -170,15 +170,15 @@ let ranking = [];
 const sheetHeaders = ["Timestamp", "Name", "Student #", "Group #", "Pulses", "Pulse length", "Avg Pulse length", "P", "Score"]; // don't change this order
 const emptyStudentRow = [0,0,0,0,0,0,0];
 
-async function mount(num) {
-  await getMyAPI();
+function mount(num) {
+  getMyAPI();
   let counter = document.getElementById("count")
-  let int = self.setInterval(async function () {
+  let int = self.setInterval(function () {
     try {
     newcount = count + 1;
     counter.innerHTML = counter.innerHTML.replace(count, newcount);
     count = newcount;
-    await getMyAPI();
+    getMyAPI();
     } catch(e) {
       console.log(e);
     }
@@ -186,8 +186,8 @@ async function mount(num) {
 }
 
 // data format is [group][student][column]
-async function getMyAPI() {
-  await $.getJSON(googleScriptURL, function(data) {
+function getMyAPI() {
+  $.getJSON(googleScriptURL, function(data) {
     try {
       for (i = 0; i < data.length; i++) {
           let group = data[i]
@@ -283,6 +283,7 @@ for (i = 0; i < groupScores.length; i++) {
 
 <div class="header">
   <h1>Chronometer Competition Ranking: Live Scores</h1>
+  <p>Please wait 5 seconds to load initial data when first visiting this page.</p>
   <p id="count">API calls: 0</p>
 </div>
 
@@ -296,7 +297,7 @@ for (i = 0; i < groupScores.length; i++) {
         </div>
 
         <div class="cardBody">
-          <h5> Group Score: </h5> 
+          <h5> Score Sum: </h5> 
           <b><p id="score_1"></p></b> 
         
           <h5> Individual Scores: </h5> 
@@ -324,7 +325,7 @@ for (i = 0; i < groupScores.length; i++) {
         </div>
 
         <div class="cardBody">
-          <h5> Group Score: </h5> 
+          <h5> Score Sum: </h5> 
           <b><p id="score_2"></p></b> 
         
           <h5> Individual Scores: </h5> 
@@ -352,7 +353,7 @@ for (i = 0; i < groupScores.length; i++) {
         </div>
 
         <div class="cardBody">
-          <h5> Group Score: </h5> 
+          <h5> Score Sum: </h5> 
           <b><p id="score_3"></p></b> 
         
           <h5> Individual Scores: </h5> 
@@ -380,7 +381,7 @@ for (i = 0; i < groupScores.length; i++) {
         </div>
 
         <div class="cardBody">
-          <h5> Group Score: </h5> 
+          <h5> Score Sum: </h5> 
           <b><p id="score_4"></p></b> 
         
           <h5> Individual Scores: </h5> 
@@ -408,7 +409,7 @@ for (i = 0; i < groupScores.length; i++) {
         </div>
 
         <div class="cardBody">
-          <h5> Group Score: </h5> 
+          <h5> Score Sum: </h5> 
           <b><p id="score_5"></p></b> 
         
           <h5> Individual Scores: </h5> 
@@ -436,7 +437,7 @@ for (i = 0; i < groupScores.length; i++) {
         </div>
 
         <div class="cardBody">
-          <h5> Group Score: </h5> 
+          <h5> Score Sum: </h5> 
           <b><p id="score_6"></p></b> 
         
           <h5> Individual Scores: </h5> 
