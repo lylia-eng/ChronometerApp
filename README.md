@@ -1,0 +1,5 @@
+# Chronometer App
+## Dartmouth College
+## ENGS 146 2020 Spring
+
+![diagram](App_diagram.png)
