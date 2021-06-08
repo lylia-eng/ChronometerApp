@@ -1,4 +1,4 @@
-// Version date: May 26
+// Version date: May 27, 2021
 import processing.serial.*;
 Serial mySerial;
 import processing.net.*;
@@ -11,7 +11,7 @@ import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 
-String port = "/dev/cu.usbmodem14201";
+String port = "/dev/cu.usbmodem14201"; // or e.g. "COM7" on Windows
 String USER_AGENT = "Chrome/81.0.4044.141";
 
 Table table;
@@ -20,7 +20,7 @@ int start_char = 126;
 
 void setup() 
 {
-  //set mySerial to listen on COM port 10 at 115200 baud
+  //set mySerial to listen on COM port 10 at 9600 baud
   mySerial = new Serial(this, port, 115200);
   int c;
   
@@ -102,31 +102,32 @@ void submit_form(String values)
 {
   // Make a silent Google form submission passing the six values provided in the string (whitespace separated)
   // Original from Google:
-  // https://docs.google.com/forms/d/e/1FAIpQLSdhCbhXjZFhiuKVI3hdSGxKYw07o00LulcjyHULDEcukQMhXw/viewform?usp=pp_url&entry.542666132=name&entry.851165377=val1&entry.1776648628=val2&entry.1970406796=val3&entry.45221374=val4&entry.339220323=val5
+  // https://docs.google.com/forms/d/e/1FAIpQLSdThHY2_m3mWk0BW_mJnTiVuqqsn9dSy9BhOPGr3QhRQrfwww/viewform?usp=pp_url&entry.870043936=name&entry.1146981135=val1&entry.1876202486=val2&entry.760049515=val3&entry.864227038=val4&entry.1241692629=val5&entry.1491548388=val6
   // Add sillent submit magic:
-  // https://docs.google.com/forms/d/e/1FAIpQLSdhCbhXjZFhiuKVI3hdSGxKYw07o00LulcjyHULDEcukQMhXw/formResponse?usp=pp_url&entry.542666132=name&entry.851165377=val1&entry.1776648628=val2&entry.1970406796=val3&entry.45221374=val4&entry.339220323=val5&submit=Submit
-  String[] vals = values.split(",", 7);  // expecting 6 values
+  // https://docs.google.com/forms/d/e/1FAIpQLSdThHY2_m3mWk0BW_mJnTiVuqqsn9dSy9BhOPGr3QhRQrfwww/viewform?usp=pp_url&entry.870043936=name&entry.1146981135=val1&entry.1876202486=val2&entry.760049515=val3&entry.864227038=val4&entry.1241692629=val5&entry.1491548388=val6&submit=Submit
+  String[] vals = values.split(",", 9);  // expecting 8 values
   //System.out.println("Seventh token is:" + vals[6] + "\n");
   
-  String url_start = "https://docs.google.com/forms/d/e/1FAIpQLSfRGrEMlZrtUuvqUzjzTsSFR7BfIlB1N03iTI_er0qUnTwFNw/formResponse?usp=pp_url";
-// https://docs.google.com/forms/d/e/1FAIpQLSfRGrEMlZrtUuvqUzjzTsSFR7BfIlB1N03iTI_er0qUnTwFNw/viewform?usp=pp_url&entry.1876202486=1&entry.870043936=2
-  String entry_0 = "&entry.1876202486=";
-  String entry_1 = "&entry.870043936=";
-  String entry_2 = "&entry.760049515=";
-  String entry_3 = "&entry.864227038=";
-  String entry_4 = "&entry.1241692629=";
-  String entry_5 = "&entry.1491548388=";
+  // https://docs.google.com/forms/d/e/1FAIpQLSdThHY2_m3mWk0BW_mJnTiVuqqsn9dSy9BhOPGr3QhRQrfwww/viewform?entry.870043936=A+B+C&entry.1146981135=1&entry.1876202486=2&entry.760049515=3&entry.864227038=4&entry.1241692629=5&entry.1491548388=6
+  // String url_start = https://docs.google.com/forms/d/e/1FAIpQLSdThHY2_m3mWk0BW_mJnTiVuqqsn9dSy9BhOPGr3QhRQrfwww/formResponse?usp=pp_url
+  // https://docs.google.com/forms/d/e/1FAIpQLSdThHY2_m3mWk0BW_mJnTiVuqqsn9dSy9BhOPGr3QhRQrfwww/viewform?entry.870043936=A+B+C&entry.1146981135=1&entry.1876202486=2&entry.760049515=3&entry.864227038=4&entry.1003910388=5&entry.1241692629=6&entry.1491548388=7
+  String url_start = "https://docs.google.com/forms/d/e/1FAIpQLSdThHY2_m3mWk0BW_mJnTiVuqqsn9dSy9BhOPGr3QhRQrfwww/formResponse?usp=pp_url";
+  String entry_0 = "&entry.870043936=";
+  String entry_1 = "&entry.1146981135=";
+  String entry_2 = "&entry.1876202486=";
+  String entry_3 = "&entry.760049515=";
+  String entry_4 = "&entry.864227038=";
+  String entry_5 = "&entry.1003910388=";
+  String entry_6 = "&entry.1241692629=";
+  String entry_7 = "&entry.1491548388=";
   String url_end = "&submit=Submit";
   String https_url;
   
   HttpsURLConnection con = null;
   URL url;
   
-  https_url = url_start + entry_0 + vals[0] + entry_1 + vals[1] + entry_2 + vals[2] + entry_3 + vals[3] + entry_4 + vals[4] + entry_5 + vals[5] + url_end;
-  //System.out.println(https_url);
-  //https_url = "https://docs.google.com/forms/d/e/1FAIpQLSdhCbhXjZFhiuKVI3hdSGxKYw07o00LulcjyHULDEcukQMhXw/formResponse?usp=pp_url&entry.542666132=1234.5&submit=Submit";
-  //https_url = "https://docs.google.com/forms/d/e/1FAIpQLSdhCbhXjZFhiuKVI3hdSGxKYw07o00LulcjyHULDEcukQMhXw/formResponse?usp=pp_url&entry.542666132=Group1Student2&entry.851165377=15.00&entry.1776648628=0.36&entry.1970406796=29916&entry.45221374=374.00&entry.339220323=15708.00&submit=Submit";
-  //https_url = "https://docs.google.com/forms/d/e/1FAIpQLSdhCbhXjZFhiuKVI3hdSGxKYw07o00LulcjyHULDEcukQMhXw/formResponse?usp=pp_url&entry.542666132=Group1Student2&entry.851165377=5.00&entry.1776648628=0.03&entry.1970406796=2333&entry.45221374=33.00&entry.339220323=1386.00&submit=Submit";
+  https_url = url_start + entry_0 + vals[0] + entry_1 + vals[1] + entry_2 + vals[2] + entry_3 + vals[3] + entry_4 + vals[4] + entry_5 + vals[5] + entry_6 + vals[6] + entry_7 + vals[7] + url_end;
+  
   //System.out.println(https_url);
 
   try 
@@ -146,28 +147,27 @@ void submit_form(String values)
   {
     e.printStackTrace();
   }
-   // Code below prints the Google response - useful only for debugging and very verbose
-  //if(con!=null)
-  //{
-  //  try 
-  //  {
-  //    System.out.println("****** Content of the URL ********");
-  //    BufferedReader br =
-  //    new BufferedReader(
-  //    new InputStreamReader(con.getInputStream()));
+  // Code below prints the Google response - useful only for debugging and very verbose
+  /* if(con!=null)
+  {
+    try 
+    {
+      System.out.println("****** Content of the URL ********");
+      BufferedReader br =
+      new BufferedReader(
+      new InputStreamReader(con.getInputStream()));
 
-  //    String input;
+      String input;
 
-  //    while ((input = br.readLine()) != null)
-  //    {
-  //      System.out.println(input);
-  //    }
-  //    br.close();
-  //  } 
-  //  catch (IOException e) 
-  //  {
-  //    e.printStackTrace();
-  //  }
-  //} 
+      while ((input = br.readLine()) != null)
+      {
+        System.out.println(input);
+      }
+      br.close();
+    } 
+    catch (IOException e) 
+    {
+      e.printStackTrace();
+    }
+  } */
 }
-      

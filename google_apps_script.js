@@ -1,73 +1,52 @@
 function doGet(e) {
-    // '1F2q1uA-_N2mmf696VhHk11r0oElrOgM8EMpRY7gIb8s';
-     var spreadsheetId = '1Ayu2W1Iff8OzJ7siL8Q69FqmnRFMQUJK55pJTN6aqLU'; 
-     
-     var group1 = SpreadsheetApp
+     var spreadsheetId = '1uXklKUKO7-9wfPxUY5rTtAtd5EY68lX0AZpzGpHLiYY';
+     var group41 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group1_latest');
-     var group2 = SpreadsheetApp
+     .getSheetByName('Group41_Latest');
+     var group23 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group2_latest');
-     var group3 = SpreadsheetApp
+     .getSheetByName('Group23_Latest');
+     var group75 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group3_latest');
-     var group4 = SpreadsheetApp
+     .getSheetByName('Group75_Latest');
+     var group68 = SpreadsheetApp
      .openById(spreadsheetId)
-     .getSheetByName('Group4_latest');
-     var group5 = SpreadsheetApp
-     .openById(spreadsheetId)
-     .getSheetByName('Group5_latest');
-     var group6 = SpreadsheetApp
-     .openById(spreadsheetId)
-     .getSheetByName('Group6_latest');
-     
+     .getSheetByName('Group68_Latest');
+
     // getSheetValues(startRow, startColumn, numRows, numColumns) -- startRow = group3.getLastRow()
      // .reduce(function(a, b){return a.concat(b);})
-     var results_group1 = [[]];
-     var results_group2 = [[]];
-     var results_group3 = [[]];
-     var results_group4 = [[]];
-     var results_group5 = [[]];
-     var results_group6 = [[]];
+     var results_group41 = [[]];
+     var results_group23 = [[]];
+     var results_group75 = [[]];
+     var results_group68 = [[]];
 
-     if (group1.getLastRow() > 1) {
-        results_group1 = group1.getSheetValues(2, 1, group1.getLastRow() - 1, 9);
+     if (group41.getLastRow() > 1) {
+        results_group41 = group41.getSheetValues(2, 1, group41.getLastRow() - 1, 10);
      }
-     if (group2.getLastRow() > 1) {
-        results_group2 = group2.getSheetValues(2, 1, group2.getLastRow() - 1, 9);
+     if (group23.getLastRow() > 1) {
+        results_group23 = group23.getSheetValues(2, 1, group23.getLastRow() - 1, 10);
      }
-     if (group3.getLastRow() > 1) {
-        results_group3 = group3.getSheetValues(2, 1, group3.getLastRow() - 1, 9);
+     if (group75.getLastRow() > 1) {
+        results_group75 = group75.getSheetValues(2, 1, group75.getLastRow() - 1, 10);
      }
-     if (group4.getLastRow() > 1) {
-        results_group4 = group4.getSheetValues(2, 1, group4.getLastRow() - 1, 9);
+     if (group68.getLastRow() > 1) {
+        results_group68 = group68.getSheetValues(2, 1, group68.getLastRow() - 1, 10);
      }
-     if (group5.getLastRow() > 1) {
-        results_group5 = group5.getSheetValues(2, 1, group5.getLastRow() - 1, 9);
-     }
-     if (group6.getLastRow() > 1) {
-        results_group6 = group6.getSheetValues(2, 1, group6.getLastRow() - 1, 9);
-     }
-     
-    //  Logger.log(results_group1);
-    //  Logger.log(results_group2);
-    //  Logger.log(results_group3);
-    //  Logger.log(results_group4);
-    //  Logger.log(results_group5);
-    //  Logger.log(results_group6);
-     
+
+      Logger.log(results_group41);
+      Logger.log(results_group23);
+      Logger.log(results_group75);
+      Logger.log(results_group68);
+
      var results = [];
-     results.push(results_group1);
-     results.push(results_group2);
-     results.push(results_group3);
-     results.push(results_group4);
-     results.push(results_group5);
-     results.push(results_group6);
-   
+     results.push(results_group41);
+     results.push(results_group23);
+     results.push(results_group75);
+     results.push(results_group68);
+
      Logger.log(results);
-   
+
     return ContentService.createTextOutput(
      e.parameters.callback + '(' + JSON.stringify(results) + ')'
     ).setMimeType(ContentService.MimeType.JAVASCRIPT);
    }
-   

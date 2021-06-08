@@ -1,3 +1,4 @@
+// Version date: May 27, 2021
 const int pin = 7;
 unsigned long PulseLength;
 float StartTime;
@@ -5,13 +6,14 @@ float TotalErrSqrd = 0;
 float AvgPulseLen = 0;
 //float Rsquared;
 float P = 1;
+float N;
 float Score;
 unsigned long timeout = 100000000;
 int Pulses = 0;
 int flag = 0;
 int flag1 = 0;
-String student_name = "Sharon";
-String group_number = "2";
+String student_name = "LondonTipton";
+String group_number = "23";
 
 int lastState = 1;
 unsigned long startTime = 0;
@@ -34,12 +36,14 @@ void loop() {
     if (State == HIGH) {
       if (flag == 0) {
         StartTime = micros();
+        LastTime = micros();
       }
       flag = 1;
 
       if (flag1 == 1) {
       // Calculate pulse length
-      PulseLength = micros() - LastTime;  
+      PulseLength = micros() - LastTime;
+      LastTime = micros();  
 
       //Calculate the moving average of the pulse lengths
       AvgPulseLen = ((float(PulseLength) / 1000000) + (Pulses * AvgPulseLen)) / (float(Pulses) + 1);
@@ -48,19 +52,24 @@ void loop() {
       Pulses++;
 
       //Calculate the Precision through a moving mean average deviation
-      P = 1 - (1 - P) - (abs((float(PulseLength) / 1000000) - AvgPulseLen) / (float(Pulses)));
+      P = 1 - (1 - P) * (float(Pulses)-1) / (float(Pulses)) - (abs((float(PulseLength) / 1000000) - AvgPulseLen) / (float(Pulses)));
 
       //Calculate the moving total score given by NP, where N=seconds and P=Precision
       Score = ((micros() - StartTime) / 1000000) * P;
-
+      N = Score / P;
+      
       //Print the results
       Serial.print(student_name);
       Serial.print(",");
       Serial.print(group_number);
       Serial.print(",");
+      Serial.print(Pulses);
+      Serial.print(",");
       Serial.print(PulseLength / 1000);
       Serial.print(",");
       Serial.print(int(AvgPulseLen * 1000));
+      Serial.print(",");
+      Serial.print(N);
       Serial.print(",");
       Serial.print(P);
       Serial.print(",");
@@ -77,7 +86,7 @@ void loop() {
     }  // end of state being HIGH
     
     lastState = State;
-    LastTime = micros();
+//    LastTime = micros();
     
   }
 }   // end of state change
